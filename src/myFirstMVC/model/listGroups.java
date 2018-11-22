@@ -59,6 +59,23 @@ public class listGroups extends Group implements Serializable {
         return false;
     }
 
+    public boolean isThereAFaculty(String fac) {
+        for (Group group : groups) {
+            String stFac = group.getFaculty();
+            if (stFac.equals(fac)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Group checkGroupByFaculty(String fac, int temp) {
+        if (groups.get(temp).getFaculty().equals(fac)){
+            return groups.get(temp);
+        }
+        return null;
+    }
+
     public int sizeOfList() {
         return groups.size();
     }

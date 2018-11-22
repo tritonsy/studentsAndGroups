@@ -52,6 +52,31 @@ public class listStudents extends Student implements Serializable {
         return null;
     }
 
+
+    public boolean isThereADate(Date bufDate) {
+        for (Student student : students) {
+            Date stDate = student.getDateOfEntry();
+            if (stDate.equals(bufDate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Student checkStudentByDate(Date bufDate, int temp) {
+        if (students.get(temp).getDateOfEntry().equals(bufDate)){
+            return students.get(temp);
+        }
+        return null;
+    }
+
+    public Student checkStudentByGroup(String Gr, int temp) {
+        if (students.get(temp).getGrNumb().equals(Gr)){
+            return students.get(temp);
+        }
+        return null;
+    }
+
     //Метод удаления студента из списка по имени студента
     public void deleteStByName(String name) {
         students.remove(findStudent(name));
