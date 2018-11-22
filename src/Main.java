@@ -1,3 +1,7 @@
+/**
+ * Created by Alexander K., Anastasia S., Michael O. on 16.11.2018.
+ */
+
 import myFirstMVC.controller;
 import myFirstMVC.model.listGroups;
 import myFirstMVC.model.listStudents;
@@ -20,6 +24,7 @@ public class Main {
         Scanner innn = new Scanner(System.in); // Иначе конфликтует со свитчем
         listStudents modelStudent = uploadListST();
         listGroups modelGroup = uploadListGR();
+        //System.out.println(modelStudent.getStudent(2));
         view view = new view();
         controller controller = new controller(modelStudent, modelGroup, view);
         boolean everythingIsOk = true;
@@ -129,7 +134,10 @@ public class Main {
                         case "2":
                             System.out.println("Enter number of group: ");
                             String tempGr = in.nextLine();
-                            controller.de
+                            controller.deleteGroup(tempGr);
+                            exportListGR(modelGroup);
+                            controller.updateViewGR();
+                            break;
                         default:
                             System.out.println("Incorrect info");
                             break;

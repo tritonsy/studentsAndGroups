@@ -1,4 +1,7 @@
 package myFirstMVC;
+/**
+ * Created by Alexander K., Anastasia S., Michael O. on 16.11.2018.
+ */
 
 import myFirstMVC.model.listGroups;
 import myFirstMVC.model.listStudents;
@@ -27,7 +30,7 @@ public class controller {
     public void addNewStudent(String name, String group, Date dateOfEntry) {
         if (modelGroup.isThereAGroupNumber(group)) {
             modelStudent.addStudents(name, group, dateOfEntry);
-        }else System.out.println("There is no such group");
+        } else System.out.println("There is no such group");
     }
 
     //Метод на проверку существует ли студент с таким именем
@@ -59,7 +62,7 @@ public class controller {
     public void setStudentGr(String name, String group) {
         if (modelGroup.isThereAGroupNumber(group)) {
             modelStudent.findStudent(name).setGrNumb(group);
-        }else System.out.println("There is no such group");
+        } else System.out.println("There is no such group");
     }
 
     //Метод изменения даты зачисления студента с именем name
@@ -73,17 +76,19 @@ public class controller {
     }
 
     //Метод добавления факультета
-    public void addNewGroup(String group, String faculty){
+    public void addNewGroup(String group, String faculty) {
         modelGroup.addGroup(group, faculty);
     }
 
-    public void deleteGroup(String group){
-        modelGroup.
+    public void deleteGroup(String group) {
+        modelGroup.deleteByGroup(group);
     }
+
     //Методы обновления представления
     public void updateViewST() {
         view.printStudentInfo(modelStudent);
     }
+
     public void updateViewGR() {
         view.printGroupInfo(modelGroup);
     }

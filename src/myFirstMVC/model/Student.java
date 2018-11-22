@@ -1,4 +1,7 @@
 package myFirstMVC.model;
+/**
+ * Created by Alexander K., Anastasia S., Michael O. on 16.11.2018.
+ */
 
 import java.io.Serializable;
 import java.util.Date;

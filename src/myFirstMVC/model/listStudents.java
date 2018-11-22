@@ -1,5 +1,7 @@
 package myFirstMVC.model;
-
+/**
+ * Created by Alexander K., Anastasia S., Michael O. on 16.11.2018.
+ */
 import myFirstMVC.model.Student;
 
 import java.io.Serializable;

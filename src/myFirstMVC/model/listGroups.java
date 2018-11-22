@@ -1,6 +1,7 @@
 package myFirstMVC.model;
-
-import myFirstMVC.model.Group;
+/**
+ * Created by Alexander K., Anastasia S., Michael O. on 16.11.2018.
+ */
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,34 +10,46 @@ public class listGroups extends Group implements Serializable {
     private static final long serialVersionUID = 1759266677557508159L;
     private ArrayList<Group> groups = new ArrayList<>();
 
-    public void addGroup(String faculty, String group) {
+    public void addGroup(String group, String faculty) {
         Group newGroup = new Group();
-        newGroup.setNameFac(faculty);
         newGroup.setGrNumb(group);
-        if (alreadyExists(faculty, group)) {
+        newGroup.setNameFac(faculty);
+        if (alreadyExists(group, faculty)) {
             System.out.println("Already exists");
         } else groups.add(newGroup);
     }
 
-    public boolean alreadyExists(String faculty, String groupNum) {
+    public boolean alreadyExists(String groupNum, String faculty) {
         for (Group group : groups) {
-            String fac = group.getFaculty();
             String stGrNumb = group.getGroupNumber();
-            if (fac.equals(faculty) && stGrNumb.equals(groupNum)) {
+            String fac = group.getFaculty();
+            if (stGrNumb.equals(groupNum) && fac.equals(faculty)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void delGroup(String group){
-        groups.remove
+    //Метод, который возвращает объект группы из списка групп4
+    public Group findGroup(String groupN) {
+        for (Group group : groups) {
+            String bufGroup = group.getGroupNumber();
+            if (bufGroup.equals(groupN)) {
+                return group;
+            }
+        }
+        return null;
     }
-    public Group getGroup(int n){
+
+    public void deleteByGroup(String groupNum) {
+        groups.remove(findGroup(groupNum));
+    }
+
+    public Group getGroup(int n) {
         return groups.get(n);
     }
 
-    public boolean isThereAGroupNumber(String groupNum){
+    public boolean isThereAGroupNumber(String groupNum) {
         for (Group group : groups) {
             String stGrNumb = group.getGroupNumber();
             if (stGrNumb.equals(groupNum)) {

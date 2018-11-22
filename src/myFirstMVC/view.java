@@ -25,4 +25,5 @@ public class view {
             System.out.println("Faculty: " + groups.getGroup(i).getFaculty());
         }
     }
+
 }
