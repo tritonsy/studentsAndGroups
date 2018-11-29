@@ -1,17 +1,18 @@
-package myFirstMVC.controller;
+package myFirstMVC;
 /**
  * Created by Alexander K., Anastasia S., Michael O. on 16.11.2018.
  */
 
 import myFirstMVC.model.Group;
+import myFirstMVC.model.ListGroups;
+import myFirstMVC.model.ListStudents;
 import myFirstMVC.model.Student;
-import myFirstMVC.model.listGroups;
-import myFirstMVC.model.listStudents;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
@@ -19,21 +20,21 @@ import java.util.Scanner;
  * с заложенной в него логикой, реагирует на это событие изменяя
  * модель, посредством вызова соответствующего метода.
  */
-public class controller {
-    private listStudents modelStudent;
-    private listGroups modelGroup;
-    private myFirstMVC.view.view view;
+public class Controller {
+    private ListStudents modelStudent;
+    private ListGroups modelGroup;
+    private View View;
 
     //Конструктор контроллера, в качестве полей принимает модель
     //и представление
-    public controller(listStudents modelStudent, listGroups modelGroup, myFirstMVC.view.view view) {
+    public Controller(ListStudents modelStudent, ListGroups modelGroup, View View) {
         this.modelStudent = modelStudent;
         this.modelGroup = modelGroup;
-        this.view = view;
+        this.View = View;
     }
 
     //Метод добавления студента
-    public void addNewStudent(String name, String group, Date dateOfEntry) {
+    public void addNewStudent(String name, String group, LocalDate dateOfEntry) {
         if (modelGroup.isThereAGroupNumber(group)) {
             modelStudent.addStudents(name, group, dateOfEntry);
         } else System.out.println("There is no such group");
@@ -72,7 +73,7 @@ public class controller {
     }
 
     //Метод изменения даты зачисления студента с именем name
-    public void setStudentEntryDate(String name, Date newDate) {
+    public void setStudentEntryDate(String name, LocalDate newDate) {
         modelStudent.findStudent(name).setDateOfEntry(newDate);
     }
 
@@ -92,47 +93,65 @@ public class controller {
 
     //Методы обновления представления
     public void updateViewST() {
-        view.printStudentInfo(modelStudent);
+        View.printStudentInfo(modelStudent);
     }
 
     public void updateViewGR() {
-        view.printGroupInfo(modelGroup);
+        View.printGroupInfo(modelGroup);
     }
 
-    //Searching info by attr
+    /**
+     * Метод, который ищет информацию по атрибуту
+     * @param bufString атрибут типа Sting (Дата, Факультет, Номер группы, Имя студента)
+     */
     public void findInfoFrom(String bufString) {
-        if (modelGroup.isThereAGroupNumber(bufString)) {
+        boolean isItDate = true;
+        try {
+            LocalDate.parse(bufString, DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        } catch (Exception DateTimeParseException) {
+            System.out.println("Please, enter correct date");
+            isItDate = false;
+        }
+        if (isItDate) {
+            for (int i = 0; i < modelStudent.sizeOfList(); i++) {
+                if (modelStudent.checkStudentByDate(LocalDate.parse(bufString, DateTimeFormatter.ofPattern("yyyy.MM.dd")), i) != null)
+                    View.printStudent(modelStudent.checkStudentByDate(LocalDate.parse(bufString, DateTimeFormatter.ofPattern("yyyy.MM.dd")), i));
+            }
+        } else if (modelGroup.isThereAGroupNumber(bufString)) {
             for (int i = 0; i < modelStudent.sizeOfList(); i++) {
                 if (modelStudent.checkStudentByGroup(bufString, i) != null)
-                    view.printStudent(modelStudent.checkStudentByGroup(bufString, i));
+                    View.printStudent(modelStudent.checkStudentByGroup(bufString, i));
             }
         } else if (modelGroup.isThereAFaculty(bufString)) {
             for (int i = 0; i < modelGroup.sizeOfList(); i++) {
                 if (modelGroup.checkGroupByFaculty(bufString, i) != null)
-                    view.printGroup(modelGroup.checkGroupByFaculty(bufString, i));
+                    View.printGroup(modelGroup.checkGroupByFaculty(bufString, i));
             }
             for (int i = 0; i < modelStudent.sizeOfList(); i++) {
                 for (int j = 0; j < modelGroup.sizeOfList(); j++) {
                     if ((modelStudent.getStudent(i).getGrNumb().equals(modelGroup.getGroup(j).getGroupNumber())) &&
                             (modelGroup.getGroup(j).getFaculty().equals(bufString))) {
-                        view.printStudent(modelStudent.getStudent(i));
+                        View.printStudent(modelStudent.getStudent(i));
                     }
                 }
             }
-        }else if(modelStudent.findStudent(bufString)!=null){
-            view.printStudent(modelStudent.findStudent(bufString));
-        }else System.out.println("No info has been found");
+        } else if (modelStudent.findStudent(bufString) != null) {
+            View.printStudent(modelStudent.findStudent(bufString));
+        } else System.out.println("No info has been found");
     }
 
-    //Добавление данных студентов из другого файла
+    ////добавление данных студентов из другого файла
     public void addNewFileStudents() throws IOException, ClassNotFoundException {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter file name...");
         String nameFile = sc.nextLine();
+        //BufferedInputStream bis = new BufferedInputStream()
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nameFile));
-        Object newListStudents = (listStudents) ois.readObject();
-        for (int i = 0; i < ((listStudents) newListStudents).sizeOfList(); i++) {
-            Student stbuf = (Student) ((listStudents) newListStudents).getStudent(i);
+        Object newListStudents = (ListStudents) ois.readObject();
+        boolean flagempty = false;
+
+        for (int i = 0; i < ((ListStudents) newListStudents).sizeOfList(); i++) {
+            Student stbuf = (Student) ((ListStudents) newListStudents).getStudent(i);
             if (modelStudent.sizeOfList() == 0) {
                 modelStudent.addStudents(stbuf.getName(), stbuf.getGrNumb(), stbuf.getDateOfEntry());
             } else if (!modelStudent.alreadyExists(stbuf.getName(), stbuf.getGrNumb(), stbuf.getDateOfEntry())) {
@@ -150,10 +169,10 @@ public class controller {
         String nameFile = sc.nextLine();
         //BufferedInputStream bis = new BufferedInputStream()
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nameFile));
-        Object newListGroups = (listGroups) ois.readObject();
+        Object newListGroups = (ListGroups) ois.readObject();
         boolean flagempty = false;
-        for (int i = 0; i < ((listGroups) newListGroups).sizeOfList(); i++) {
-            Group grbuf = (Group) ((listGroups) newListGroups).getGroup(i);
+        for (int i = 0; i < ((ListGroups) newListGroups).sizeOfList(); i++) {
+            Group grbuf = (Group) ((ListGroups) newListGroups).getGroup(i);
             if (modelGroup.sizeOfList() == 0) {
                 modelGroup.addGroup(grbuf.getGroupNumber(), grbuf.getFaculty());
             } else if (!modelGroup.alreadyExists(grbuf.getGroupNumber(), grbuf.getFaculty()) || flagempty) {

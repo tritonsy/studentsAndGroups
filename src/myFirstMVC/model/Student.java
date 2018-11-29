@@ -4,6 +4,7 @@ package myFirstMVC.model;
  */
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -16,7 +17,7 @@ public class Student implements Serializable {
     private static final long serialVersionUID = -8915012820618963012L;
     private String fullName;
     private String grNumb;
-    private Date dateOfEntry;
+    private LocalDate dateOfEntry;
 
     //Метод получения ФИО студента
     public String getName() {
@@ -39,12 +40,12 @@ public class Student implements Serializable {
     }
 
     //Метод получения даты зачисления
-    public Date getDateOfEntry() {
+    public LocalDate getDateOfEntry() {
         return this.dateOfEntry;
     }
 
     //Метод изменения даты зачисления
-    public void setDateOfEntry(Date dateOfEntry) {
+    public void setDateOfEntry(LocalDate dateOfEntry) {
         this.dateOfEntry = dateOfEntry;
     }
 }

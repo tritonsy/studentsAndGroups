@@ -6,10 +6,16 @@ package myFirstMVC.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class listGroups extends Group implements Serializable {
+public class ListGroups extends Group implements Serializable {
     private static final long serialVersionUID = 1759266677557508159L;
     private ArrayList<Group> groups = new ArrayList<>();
 
+    /**
+     * Метод добавления группы
+     *
+     * @param group   номер группы
+     * @param faculty факультет
+     */
     public void addGroup(String group, String faculty) {
         Group newGroup = new Group();
         newGroup.setGrNumb(group);
@@ -19,6 +25,13 @@ public class listGroups extends Group implements Serializable {
         } else groups.add(newGroup);
     }
 
+    /**
+     * Метод, который проверяет на дубликаты группы
+     *
+     * @param groupNum номер группы
+     * @param faculty  факультет
+     * @return возвращает true, если группа уже существует, false в ином случае
+     */
     public boolean alreadyExists(String groupNum, String faculty) {
         for (Group group : groups) {
             String stGrNumb = group.getGroupNumber();
@@ -30,7 +43,12 @@ public class listGroups extends Group implements Serializable {
         return false;
     }
 
-    //Метод, который возвращает объект группы из списка групп4
+    /**
+     * Метод, который возвращает объект группы из списка групп
+     *
+     * @param groupN номер группы
+     * @return возвращает объект группы, если таковая есть, null в ином случае
+     */
     public Group findGroup(String groupN) {
         for (Group group : groups) {
             String bufGroup = group.getGroupNumber();
@@ -41,14 +59,31 @@ public class listGroups extends Group implements Serializable {
         return null;
     }
 
+    /**
+     * Метод удаления группы
+     *
+     * @param groupNum номер группы
+     */
     public void deleteByGroup(String groupNum) {
         groups.remove(findGroup(groupNum));
     }
 
+    /**
+     * Метод полученя объекта группы по порядковому номеру
+     *
+     * @param n номер группы в списке
+     * @return возвращает объект группы
+     */
     public Group getGroup(int n) {
         return groups.get(n);
     }
 
+    /**
+     * Метод, который проверяет, есть ли группа с идентичным номером
+     *
+     * @param groupNum номер группы
+     * @return возвращает true, если группа есть, false в ином случае
+     */
     public boolean isThereAGroupNumber(String groupNum) {
         for (Group group : groups) {
             String stGrNumb = group.getGroupNumber();
@@ -59,6 +94,12 @@ public class listGroups extends Group implements Serializable {
         return false;
     }
 
+    /**
+     * Метод, который проверяет, есть ли факультет с идентичным именем
+     *
+     * @param fac факультет
+     * @return возвращает true, если факультет есть, false в ином случае
+     */
     public boolean isThereAFaculty(String fac) {
         for (Group group : groups) {
             String stFac = group.getFaculty();
@@ -69,18 +110,27 @@ public class listGroups extends Group implements Serializable {
         return false;
     }
 
+    /**
+     * Метод, который находит группу из факультета
+     *
+     * @param fac  факультет
+     * @param temp номер группы в списке
+     * @return возвращает объект группы, если такая есть, null в ином случае
+     */
     public Group checkGroupByFaculty(String fac, int temp) {
-        if (groups.get(temp).getFaculty().equals(fac)){
+        if (groups.get(temp).getFaculty().equals(fac)) {
             return groups.get(temp);
         }
         return null;
     }
 
+    /**
+     * Метод, который возвращает размер списка
+     *
+     * @return возвращает размер спика
+     */
     public int sizeOfList() {
         return groups.size();
     }
 
-    public Group getFacultyName(int i) {
-        return groups.get(i);
-    }
 }

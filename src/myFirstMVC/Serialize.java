@@ -1,27 +1,28 @@
-package myFirstMVC.controller;
+package myFirstMVC;
+/**
+ * Created by Alexander K., Anastasia S., Michael O. on 16.11.2018.
+ */
 
-import myFirstMVC.model.listGroups;
-import myFirstMVC.model.listStudents;
+import myFirstMVC.model.ListGroups;
+import myFirstMVC.model.ListStudents;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class serialization implements Serializable {
+public class Serialize implements Serializable {
     ///сериализация
-    public void exportListST(listStudents allStuds) {
+    public static void exportListST(ListStudents allStuds) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("StudentsDB.ser"))) {
             out.writeObject(allStuds);
-            out.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
     //сериализация
-    public void exportListGR(listGroups allGroups) {
+    public static void exportListGR(ListGroups allGroups) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("GroupsDB.ser"))) {
             out.writeObject(allGroups);
-            out.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
