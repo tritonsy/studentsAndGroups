@@ -102,6 +102,7 @@ public class Controller {
 
     /**
      * Метод, который ищет информацию по атрибуту
+     *
      * @param bufString атрибут типа Sting (Дата, Факультет, Номер группы, Имя студента)
      */
     public void findInfoFrom(String bufString) {
@@ -109,7 +110,7 @@ public class Controller {
         try {
             LocalDate.parse(bufString, DateTimeFormatter.ofPattern("yyyy.MM.dd"));
         } catch (Exception DateTimeParseException) {
-            System.out.println("Please, enter correct date");
+            //System.out.println("Please, enter correct date");
             isItDate = false;
         }
         if (isItDate) {
@@ -137,7 +138,9 @@ public class Controller {
             }
         } else if (modelStudent.findStudent(bufString) != null) {
             View.printStudent(modelStudent.findStudent(bufString));
-        } else System.out.println("No info has been found");
+        } else {
+            System.out.println("No info has been found");
+        }
     }
 
     ////добавление данных студентов из другого файла

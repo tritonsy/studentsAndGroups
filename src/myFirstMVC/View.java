@@ -8,7 +8,7 @@ import myFirstMVC.model.ListGroups;
 import myFirstMVC.model.ListStudents;
 import myFirstMVC.model.Student;
 
-import java.io.*;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
@@ -41,24 +41,24 @@ public class View {
             System.out.println("5 - Upload file");
             System.out.println("6 - Search");
             System.out.println("7 - Quit");
-            String buf1=in.nextLine();
+            String buf1 = in.nextLine();
             switch (buf1) {
                 case "1":
                     System.out.println("1 - Add Student");
                     System.out.println("2 - Delete Student");
                     System.out.println("3 - Select Student");
                     System.out.println("4 - Go back");
-                    String buf2=inn.nextLine();
-                    while(!buf2.equalsIgnoreCase("4")){
+                    String buf2 = inn.nextLine();
+                    while (!buf2.equalsIgnoreCase("4")) {
                         switch (buf2) {
                             case "1":
-                                wws.addStudent(controller,modelStudent,sdf);
+                                wws.addStudent(controller, modelStudent, sdf);
                                 break;
                             case "2":
-                                wws.deleteStudents(controller,modelStudent);
+                                wws.deleteStudents(controller, modelStudent);
                                 break;
                             case "3":
-                                wws.setStudent(controller,modelStudent,sdf);
+                                wws.setStudent(controller, modelStudent, sdf);
                                 break;
 
                         }//buf2="";
@@ -66,21 +66,21 @@ public class View {
                         System.out.println("2 - Delete Student");
                         System.out.println("3 - Select Student");
                         System.out.println("4 - Go back");
-                        buf2=inn.nextLine();
+                        buf2 = inn.nextLine();
                     }
                     break;
                 case "2":
                     System.out.println("1 - Add group");
                     System.out.println("2 - Delete group");
                     System.out.println("3 - Go back");
-                    String buf3=inn.nextLine();
-                    while(!buf3.equalsIgnoreCase("3")){
+                    String buf3 = inn.nextLine();
+                    while (!buf3.equalsIgnoreCase("3")) {
                         switch (buf3) {
                             case "1":
-                                wwg.addGroup(controller,modelGroup);
+                                wwg.addGroup(controller, modelGroup);
                                 break;
                             case "2":
-                                wwg.deleteGroup(controller,modelGroup);
+                                wwg.deleteGroup(controller, modelGroup);
                                 break;
                             default:
                                 System.out.println("Incorrect info");
@@ -89,7 +89,7 @@ public class View {
                         System.out.println("1 - Add group");
                         System.out.println("2 - Delete group");
                         System.out.println("3 - Go back");
-                        buf3=inn.nextLine();
+                        buf3 = inn.nextLine();
                     }
                     break;
                 case "3":
@@ -103,9 +103,9 @@ public class View {
                     System.out.println("1 - Add students file");
                     System.out.println("2 - Add group file");
                     System.out.println("3 - Go back");
-                    String buf4=innn.nextLine();
-                    while(!buf4.equalsIgnoreCase("3")){
-                        switch (buf4){
+                    String buf4 = innn.nextLine();
+                    while (!buf4.equalsIgnoreCase("3")) {
+                        switch (buf4) {
                             case "1":
                                 controller.addNewFileStudents();
                                 ser.exportListST(modelStudent);
@@ -123,12 +123,22 @@ public class View {
                         System.out.println("1 - Add students file");
                         System.out.println("2 - Add group file");
                         System.out.println("3 - Go back");
-                        buf4=innn.nextLine();
+                        buf4 = innn.nextLine();
                     }
                     break;
                 case "6":
-                    System.out.println("Enter name/group/faculty");
-                    controller.findInfoFrom(in.nextLine());
+                    System.out.println("Enter name/group/faculty/date(yyyy.MM.dd)");
+                    boolean searching = true;
+                    while (searching) {
+                        String searchStr = inn.nextLine();
+                        if (searchStr.equals("404")){
+                            searching = false;
+                        }else {
+                            controller.findInfoFrom(searchStr);
+                            System.out.println("Enter name/group/faculty/date(yyyy.MM.dd)");
+                            System.out.println("Enter 404 to exit");
+                        }
+                    }
                     break;
                 case "7":
                     System.out.println("Bye");
@@ -140,6 +150,7 @@ public class View {
             }
         }
     }
+
     public void printStudentInfo(ListStudents students) {
         for (int i = 0; i < students.sizeOfList(); i++) {
             System.out.println("Student: " + students.getStudent(i).getName());
@@ -167,6 +178,5 @@ public class View {
         System.out.println("Group Number: " + group.getGroupNumber());
         System.out.println("Faculty: " + group.getFaculty());
     }
-
 
 }

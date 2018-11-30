@@ -6,9 +6,12 @@ package myFirstMVC;
 import myFirstMVC.model.ListGroups;
 import java.util.Scanner;
 
+/**
+ * Вынесенная часть контроллера, которая работает с группами
+ */
 public class WorkWithGroup {
-    Serialize ser = new Serialize();
-    Scanner in = new Scanner(System.in);
+    private Serialize ser = new Serialize();
+    private Scanner in = new Scanner(System.in);
 
     public void addGroup(Controller controller,ListGroups modelGroup){
         String Grou ="";

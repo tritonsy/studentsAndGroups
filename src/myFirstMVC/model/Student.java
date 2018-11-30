@@ -5,7 +5,6 @@ package myFirstMVC.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * Класс, описывающий студента, который имеет поля:

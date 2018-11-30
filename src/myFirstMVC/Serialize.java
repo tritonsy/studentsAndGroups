@@ -10,6 +10,9 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * Сериализация в файл студентов и групп
+ */
 public class Serialize implements Serializable {
     ///сериализация
     public static void exportListST(ListStudents allStuds) {

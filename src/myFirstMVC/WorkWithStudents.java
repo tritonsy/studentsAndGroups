@@ -11,10 +11,12 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
+/**
+ * Вынесенная часть контроллера, которая работает со студентами
+ */
 public class WorkWithStudents {
-    Serialize ser = new Serialize();
-    Scanner in = new Scanner(System.in);
-
+    private Serialize ser = new Serialize();
+    private Scanner in = new Scanner(System.in);
 
     public void addStudent(Controller controller, ListStudents modelStudent, SimpleDateFormat sdf) {
         String stName = "";

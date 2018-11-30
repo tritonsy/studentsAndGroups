@@ -10,9 +10,12 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
+/**
+ * Десериализация из файла групп и студентов
+ */
 public class Deserialize implements Serializable {
     //десериализация
-    public ListStudents uploadListST() {
+    public static ListStudents uploadListST() {
         ListStudents allStuds = new ListStudents();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("StudentsDB.ser"))) {
             allStuds = (ListStudents) ois.readObject();
@@ -21,6 +24,7 @@ public class Deserialize implements Serializable {
         }
         return allStuds;
     }
+
     //десериализация
     public static ListGroups uploadListGR() {
         ListGroups groups = new ListGroups();
